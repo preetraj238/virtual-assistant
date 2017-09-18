@@ -68,9 +68,9 @@ public class SpeechToTextHelper {
 
     @PostConstruct
     public void init() throws Exception {
-        phoneMap.put("aayushi", "+13125071599");
+        phoneMap.put("mygirlfriend", "+13125071599");
         phoneMap.put("I", "+16303408025");
-        phoneMap.put("smriti", "+13129278526");
+        phoneMap.put("mysister", "+13129278526");
     }
 
 
@@ -161,7 +161,11 @@ public class SpeechToTextHelper {
             case "VB": {
                 switch (sent.lemmas().get(0)) {
                     case "call":
-                        String name = phoneMap.get(sent.lemmas().get(1));
+                        String a = "";
+                        for (int i = 1; i < sent.lemmas().size(); i++) {
+                            a = a.concat("").concat(sent.lemma(i));
+                        }
+                        String name = phoneMap.get(a);
                         call(name);
                         break;
                 }
@@ -169,7 +173,12 @@ public class SpeechToTextHelper {
             }
             break;
             case "NN": {
-                String name = phoneMap.get(sent.lemmas().get(1));
+                //String name = phoneMap.get(sent.lemmas().get(1));
+                String a = "";
+                for (int i = 1; i < sent.lemmas().size(); i++) {
+                    a = a.concat("").concat(sent.lemma(i));
+                }
+                String name = phoneMap.get(a);
                 switch (sent.lemmas().get(0)) {
                     case "text":
                         sendTextMessage(name, "hello");//sent.lemmas().get(1)
@@ -178,12 +187,12 @@ public class SpeechToTextHelper {
                         sendTextMessage(name, "hello");//sent.lemmas().get(1)
                         break;
                     case "search":
-                        String a = "";
+                        String src = "";
                         for (int i = 1; i < sent.lemmas().size(); i++) {
-                            a = a.concat("'").concat(sent.lemma(i));
+                            src = src.concat("'").concat(sent.lemma(i));
                         }
-                        a = a.concat("'");
-                        search(a);
+                        src = src.concat("'");
+                        search(src);
                         logger.info("");
                         break;
                 }
